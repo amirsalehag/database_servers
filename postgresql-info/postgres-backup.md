@@ -15,3 +15,6 @@ sudo chown 600 .pgpass
 We can use wild cards too. like `*:*:*:postgres:postgres`.  
 
 ---
+# best practice for backup
+https://github.com/pgbackrest/pgbackrest/issues
+https://www.educba.com/postgresql-incremental-backup/

@@ -18,3 +18,9 @@ We can use wild cards too. like `*:*:*:postgres:postgres`.
 # best practice for backup
 https://github.com/pgbackrest/pgbackrest/issues  
 https://www.educba.com/postgresql-incremental-backup/
+
+---
+# restoring the backup
+```
+ pg_restore --no-owner --dbname postgres --create /opt/backups/<dump file name>
+```

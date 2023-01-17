@@ -21,7 +21,7 @@ https://www.educba.com/postgresql-incremental-backup/
 ---
 # restoring the backup
 ```
- pg_restore --no-owner --dbname postgres --create /<path>/<to>/<dump file name>
+ pg_restore -v --no-owner --dbname postgres --create /<path>/<to>/<dump file name>
 ```
 * This command restores a dump into even a newly created postgres for example as a container somewhere else, and with `--create` argument, we tell that it should create the databases inside the postgres if its not even available, and also with `--no-owner` may not be needed if your user name is the same on both machines. But if the dump was done as user1 and the restore done as user2. The new objects need to be owned by user2 and `--no-owner` achieves this.  
 * Remember that if we are using postgres as container, then it might be running with user root, which means that the command above is using the root user as the role for the command, which is not going to work because there might not be a specified role as root, so we need to run this command before hand:  

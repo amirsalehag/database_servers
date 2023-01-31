@@ -8,7 +8,12 @@ CREATE TABLE guestbook (visitor_email text, vistor_id serial, date timestamp, me
 INSERT INTO guestbook (visitor_email, date, message) VALUES ( 'jim@gmail.com', current_date, 'This is a test.');
 \q
 ```
-* and then remember to make ssh keys for postgres user between the nodes.
+* then remember to make ssh keys for postgres user between the nodes.  
+* and also remember that the postgres servers can listen from the needed range of ip's:  
+```
+  # postgresql.conf
+listen_addresses = 'localhost'
+```
 ## Configuring the primary server
 To configure the primary server, you will:  
 Create a Postgres user for replication activities.  

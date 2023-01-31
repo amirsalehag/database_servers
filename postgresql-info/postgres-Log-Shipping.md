@@ -18,7 +18,7 @@ Edit two configuration files: pg_hba.conf and postgresql.conf.
 ```
 sudo -u postgres createuser -U postgres repuser -P -c 5 --replication
 ```
-* Create the archive directory  
+* Create the archive directory on all nodes 
 Create a directory to store archive files. This directory is a subdirectory of the cluster's data directory, which is named main by default.  
 ```
 mkdir -p /var/lib/postgresql/main/mnt/server/archivedir

@@ -18,10 +18,10 @@ Edit two configuration files: pg_hba.conf and postgresql.conf.
 ```
 sudo -u postgres createuser -U postgres repuser -P -c 5 --replication
 ```
-* Create the archive directory on all nodes 
+* Create the archive directory on all nodes  
 Create a directory to store archive files. This directory is a subdirectory of the cluster's data directory, which is named main by default.  
 ```
-mkdir -p /var/lib/postgresql/main/mnt/server/archivedir
+sudo -u postgres mkdir -p /var/lib/postgresql/main/mnt/server/archivedir
 ```
 * Edit pg_hba.conf  
 ```
@@ -44,12 +44,12 @@ sudo service postgresql restart
 Before making changes on the standby server, stop its postgres server first.  
 Then we use the `pg_basebackup` to copy over the main data directories to the replica:  
 ```
-pg_basebackup -h 172.*.*.* -p 5432 -U repuser -D /var/lib/postgresql/14/main  -Fp -Xs -P -v
+sudo -u postgres pg_basebackup -h 172.*.*.* -p 5432 -U repuser -D /var/lib/postgresql/14/main  -Fp -Xs -P -v
 ```
 and then we are asked for the user password.  
 Then we create a file standby.signal in the data directory this file will cause PostgreSQL Server to enter in standby mode:  
 ```
-touch /var/lib/postgresql/14/main/standby.signal
+sudo -u postgres touch /var/lib/postgresql/14/main/standby.signal
 ```
 * Set the below parameters in Standby postgresql.conf file:  
 ```
@@ -58,3 +58,4 @@ archive_cleanup_command = 'pg_archivecleanup -d /var/lib/postgresql/main/mnt/ser
 recovery_target_timeline = 'latest'
 hot_standby = on
 ```
+and then restart the postgresql service.  

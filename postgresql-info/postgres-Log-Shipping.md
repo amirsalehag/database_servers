@@ -1,4 +1,4 @@
-# setting up postgres replica as hot-standby
+# setting up postgres replica as log-shipping method with hot-standby
 we have 2 nodes with postgres 14 locally installed on them.  
 for testing, we create a table with values on the primary server:
 ```
@@ -11,8 +11,8 @@ INSERT INTO guestbook (visitor_email, date, message) VALUES ( 'jim@gmail.com', c
 * then remember to make ssh keys for postgres user between the nodes.  
 * and also remember that the postgres servers can listen from the needed range of ip's:  
 ```
-  # postgresql.conf
-listen_addresses = 'localhost'
+  # /etc/postgresql/14/main/postgresql.conf
+listen_addresses = '*'
 ```
 ## Configuring the primary server
 To configure the primary server, you will:  

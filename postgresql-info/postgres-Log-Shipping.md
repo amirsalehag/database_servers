@@ -68,3 +68,12 @@ recovery_target_timeline = 'latest'
 hot_standby = on
 ```
 and then restart the postgresql service.  
+
+---
+* you can test which postgres is the master or replica by this command in psql:  
+```
+select pg_is_in_recovery();
+```
+if t (true) then replica, if f (false) then master.  
+
+---

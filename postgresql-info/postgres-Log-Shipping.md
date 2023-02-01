@@ -1,4 +1,4 @@
-# setting up postgres replica as log-shipping method with hot-standby
+## setting up postgres replica as log-shipping method with hot-standby
 we have 2 nodes with postgres 14 locally installed on them.  
 for testing, we create a table with values on the primary server:
 ```

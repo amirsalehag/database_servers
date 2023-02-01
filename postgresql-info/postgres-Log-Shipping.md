@@ -47,6 +47,10 @@ sudo service postgresql restart
 ```
 ## configuring the standby server  
 Before making changes on the standby server, stop its postgres server first.  
+* we move the old main directory to somewhere else because when using pg_basebackup it doesnt override it, it adds to it:  
+```
+sudo mv /var/lib/postgresql/14/main /var/lib/postgresql/14/old_main
+```
 Then we use the `pg_basebackup` to copy over the main data directories to the replica:  
 ```
 sudo -u postgres pg_basebackup -h 172.*.*.* -p 5432 -U repuser -D /var/lib/postgresql/14/main  -Fp -Xs -P -v

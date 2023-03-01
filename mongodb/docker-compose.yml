@@ -1,0 +1,31 @@
+version: '3.1'
+services:
+  mongodb_telemetry:
+    container_name: mongodb_telemetry1
+    image: docker.localhost:8082/docker/mongo-enterprise:6.0
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /data/mongodb-telemetry:/data/db
+      - /srv/mongodb/configdb:/data/configdb
+      - /srv/mongodb/telemetry/backup:/opt/backup
+      - /srv/mongodb/config/mongod.conf:/etc/mongod.conf
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: telemetry
+    command: --config /etc/mongod.conf
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "1"
+        max-size: "500m"
+    healthcheck:
+      test: mongosh --eval 'db.runCommand("ping").ok' --quiet
+      interval: 1m
+      timeout: 15s
+      retries: 2
+      start_period: 30s

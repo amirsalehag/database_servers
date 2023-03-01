@@ -13,6 +13,7 @@ services:
       - /srv/mongodb/configdb:/data/configdb
       - /srv/mongodb/telemetry/backup:/opt/backup
       - /srv/mongodb/config/mongod.conf:/etc/mongod.conf
+      - /var/log/mongodb:/var/log/mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
@@ -29,3 +30,4 @@ services:
       timeout: 15s
       retries: 2
       start_period: 30s
+

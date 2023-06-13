@@ -29,3 +29,19 @@ https://www.educba.com/postgresql-incremental-backup/
 docker exec -i --user postgres <db container name> pg_restore ...
 ```
 ---
+# bash function for backup and restoring
+ ```
+ func_restore () {
+    #Making sure that theres no connection to the database before restoring into it, and after restoring, just to be on the safe side, we allow the connections connections again.
+  echo -e "$GRN----> Disconnecting and also deactivating any connections to the $db database.$END" ; \
+  docker exec -i "$container" psql -U postgres -d postgres -c "UPDATE pg_database SET datallowconn=false WHERE datname='$datname'" && \
+  docker exec -i "$container" psql -U postgres -d postgres -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = '$datname' AND pid <> pg_backend_pid()" && \
+  
+  echo -e "$GRN----> Restoring the $db dump-file. ### Started in : $(date "+%Y/%m/%d %H:%M")$END" ; \
+  docker exec -i --user postgres "$container" pg_restore --no-owner --dbname postgres -c --create "$dump_path" >>/var/log/database/restore-exec.log && \
+  echo -e "$GRN----> Restoring has been done. ### Ended in : $(date "+%Y/%m/%d %H:%M")$END" ; \
+  
+  docker exec -i "$container" psql -U postgres -d postgres -c "UPDATE pg_database SET datallowconn=true WHERE datname='$datname'" && \
+  echo -e "$GRN----> Connection brought back to default state just in case.$END"
+}
+```

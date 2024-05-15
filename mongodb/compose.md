@@ -1,3 +1,4 @@
+```
 version: '3.1'
 services:
   mongodb_data_analysis:
@@ -38,3 +39,4 @@ networks:
     name: data_analysis
     external: true
 
+```
